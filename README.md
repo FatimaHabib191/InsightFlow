@@ -144,6 +144,3 @@ The API is a persistent Express server. If you must deploy on Vercel alone, the 
 
 - Reopened reports show saved statistics, not live data.
 - All rows of a dataset load into the browser (fine within the row limit).
-- Authentication is basic email and password with a 7-day token stored in the browser. No password reset, email verification or token revocation.
-- Datasets and reports created before authentication was added have no owner and are no longer visible; delete them in Atlas or re-import.
-- Plain Tailwind components are used instead of shadcn/ui.
