@@ -47,9 +47,13 @@ frontend/
 
 ## API (`/api`)
 
+All routes except `/health` and `/auth/*` need an `Authorization: Bearer <token>` header. Each user only sees their own datasets and reports.
+
 | Method | Path | Purpose |
 |---|---|---|
-| GET | /health | health check |
+| POST | /auth/register | create an account (`email`, `password` 8-72 chars), returns a token |
+| POST | /auth/login | sign in, returns a token |
+| GET | /health | health check (public) |
 | GET | /datasets | list datasets (metadata and statistics) |
 | POST | /datasets | create a dataset (`name`, `columns`, `rows` as arrays, `stats`) |
 | GET | /datasets/:id | one dataset's metadata |
@@ -91,6 +95,7 @@ Edit `.env`:
 | MONGODB_URI | Atlas connection string (server only, never in the frontend) |
 | PORT | API port, default 4000 |
 | CORS_ORIGIN | allowed frontend origin(s), comma-separated, e.g. `http://localhost:5173` |
+| JWT_SECRET | random string, 32+ characters, used to sign login tokens. Generate one with `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` |
 
 ### 3. Frontend
 
@@ -139,5 +144,6 @@ The API is a persistent Express server. If you must deploy on Vercel alone, the 
 
 - Reopened reports show saved statistics, not live data.
 - All rows of a dataset load into the browser (fine within the row limit).
-- No authentication; all datasets are visible to anyone who can reach the API. Add real authentication before exposing it publicly.
+- Authentication is basic email and password with a 7-day token stored in the browser. No password reset, email verification or token revocation.
+- Datasets and reports created before authentication was added have no owner and are no longer visible; delete them in Atlas or re-import.
 - Plain Tailwind components are used instead of shadcn/ui.
