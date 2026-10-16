@@ -126,16 +126,6 @@ cd frontend && npm run build   # type-check and production build
 
 Not covered by automated tests: MongoDB operations, UI components, and end-to-end flows.
 
-## Deployment
-
-**Frontend (Vercel):** import the repository, set the root directory to `frontend`, add `VITE_API_URL` (your deployed API URL ending in `/api`), deploy. `vercel.json` handles client-side routing.
-
-**Backend (Render or Railway):** root directory `backend`, build command `npm install`, start command `npm start`, and the environment variables `MONGODB_URI` and `CORS_ORIGIN` (your Vercel URL). Allow the host in Atlas Network Access.
-
-The API is a persistent Express server. If you must deploy on Vercel alone, the backend needs adapting to serverless functions.
-
-## Troubleshooting
-
 - **"Network error: is the API reachable?"** The backend isn't running, `VITE_API_URL` is wrong, or `CORS_ORIGIN` doesn't match the frontend's address. Check the backend terminal for errors.
 - **Backend exits with "MONGODB_URI is required"** or can't connect: check `.env` and Atlas Network Access.
 - **File rejected:** check the limits above; the message says which limit was hit.
